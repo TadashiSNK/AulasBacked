@@ -1,0 +1,20 @@
+{
+  "name": "backendtadash",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "generate-migrations": "npx typeorm -d ./src/database/data-source.js migration:generate ./src/database/migrations/db --outputJs",
+    "run-migrations": "npx typeorm -d ./src/database/data-source.js migration:run",
+    "start": "nodemon src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "mysql2": "^3.15.1",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.27"
+  }
+}
