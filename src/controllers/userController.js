@@ -1,9 +1,16 @@
-import express from 'express'
+import express, { response } from 'express'
+import userEntity from '../entities/user.js'
+import { getRepository } from 'typeorm';
+import { Like } from 'typeorm';
+
+import {AppDataSource} from '../database/data-source.js'
 
 const route = express.Router()
 
+const userRepository = AppDataSource.getRepository(userEntity)
 
-route.post("/", (request, response) => {
+
+route.post("/", async (request, response) => {
     const { name, email, password, typeUser } = request.body;
 
     if(name.length  < 2){
@@ -22,7 +29,39 @@ route.post("/", (request, response) => {
         return response.send("o tipo de usuario só pode ser 'admin' ou 'comum'")
     }
 
+    const newUser = userRepository.create({name, email, password, typeUser})
+    await userRepository.save(newUser)
+
+
     response.send(`Usuario ${name} cadastrado`)
 })
+
+
+// route.get("/", async (req,res) => {
+//     const users = await userRepository.find()
+//     return res.send({"response": users})
+// })
+
+
+route.get("/:name", async (req,res) => {
+    try{
+        let {name} = req.params
+        let userID = await userRepository.findBy({name: Like(`%${name}%`)})
+        return res.send(userID)
+
+    } catch(err){
+        return res.send(`Houve um erro ${err}`)
+    }
+})
+
+
+route.put("/", async (req,res) => {
+    const {id, name, email, password, typeUser} = req.body
+
+    await userRepository.update(id, {name, email, password, typeUser})
+
+    return res.send({"response": "Dados atualizados"})
+})
+
 
 export default route;
