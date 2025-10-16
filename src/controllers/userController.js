@@ -63,5 +63,11 @@ route.put("/", async (req,res) => {
     return res.send({"response": "Dados atualizados"})
 })
 
+route.delete("/:idUser", async (req,res) => {
+    const {idUser} = req.params
+
+    await userRepository.delete({id: idUser})
+    res.send({"response": `${idUser} deletado`})
+})
 
 export default route;

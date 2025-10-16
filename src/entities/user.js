@@ -10,7 +10,7 @@ const user = new EntitySchema({
         email: {type: "varchar", length:50, nullable:false},
         typeUser: {type:"enum", enum: ["admin", "comum"], nullable:false},
         createdAt: {type:"datetime", nullable:true, default: () => {
-            "CURRENT_TIMESTAMP"
+            return "CURRENT_TIMESTAMP"
         }},
         deletedAt: {type:"datetime", nullable:true},
     },
