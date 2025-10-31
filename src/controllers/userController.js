@@ -5,6 +5,7 @@ import { Like } from 'typeorm';
 
 import {AppDataSource} from '../database/data-source.js'
 
+
 const route = express.Router()
 
 const userRepository = AppDataSource.getRepository(userEntity)
@@ -29,7 +30,7 @@ route.post("/", async (request, response) => {
         return response.send("o tipo de usuario só pode ser 'admin' ou 'comum'")
     }
 
-    const newUser = userRepository.create({name, email, password, typeUser})
+    const newUser = userRepository.create({name, email, password, typeUser, createdAt:"10-10-2025"})
     await userRepository.save(newUser)
 
 

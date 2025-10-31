@@ -11,8 +11,9 @@ const categoryRepository = AppDataSource.getRepository(categoryEntity)
 
 route.post("/", async (req,res) => {
     const {id, name} = req.body
+    const createdAt = "10-10-2025"
 
-    const newCategory = categoryRepository.create({id, name})
+    const newCategory = categoryRepository.create({id, name, createdAt})
     await categoryRepository.save(newCategory)
 
     res.send(`Categoria ${name} adicionada com sucesso`)

@@ -12,6 +12,7 @@ const authorRepository = AppDataSource.getRepository(authorEntity)
 
 route.post("/", async (req,res) => {
     const {name, birthdate, nationality} = req.body
+    console.log(`${name}, ${birthdate}, ${nationality}`)
     const newUser = authorRepository.create({name, birthdate, nationality})
     await authorRepository.save(newUser)
     res.send({"responde":`author ${name} cadastrado`})
